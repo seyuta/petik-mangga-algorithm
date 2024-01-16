@@ -2,11 +2,10 @@ package pohon
 
 import (
 	"fmt"
-	"sync"
 	"time"
 )
 
-func Mangga(dataChan chan<- []int, wg *sync.WaitGroup) {
+func Mangga(dataChan chan<- []int) {
 	var sourceDatas []int
 	for i := 1; i <= 30; i++ {
 		var data int
@@ -25,7 +24,6 @@ func Mangga(dataChan chan<- []int, wg *sync.WaitGroup) {
 			sourceDatas = sourceDatas[:0]
 
 			// give data to channel
-			wg.Add(1)
 			dataChan <- processSlice
 		}
 
@@ -33,7 +31,6 @@ func Mangga(dataChan chan<- []int, wg *sync.WaitGroup) {
 	}
 
 	if len(sourceDatas) > 0 {
-		wg.Add(1)
 		dataChan <- sourceDatas
 	}
 }
